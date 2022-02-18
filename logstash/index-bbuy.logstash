@@ -1,6 +1,6 @@
 input {
   file {
-    path => ["/workspace/datasets/product_data/products/*.xml"]  #Put in the path to the ungzipped/untarred product data.  To start smaller, simply select a smaller number of files or copy a few files to a different directory.
+    path => ["/workspace/datasets/product_data/products/products_0001_2570_to_430420.xml"]  #Put in the path to the ungzipped/untarred product data.  To start smaller, simply select a smaller number of files or copy a few files to a different directory.
     start_position => "beginning"
     codec => multiline {
             pattern => "<product>"
@@ -16,61 +16,61 @@ input {
         store_xml => "false"
         xpath => [ # NOTE: this is not a complete list of fields.  If you wish to add more, put in the appropriate XPath expression.
                   #TODO: is there a way to do this using XPath/XSL Functions so that we don't have to maintain a big list?
-            "/product/productId/text()", "productId",
-            "/product/sku/text()", "sku",
-            "/product/name/text()", "name",
-            "/product/type/text()", "type",
-            "/product/startDate/text()", "startDate",
-            "/product/active/text()", "active",
-            "/product/regularPrice/text()", "regularPrice",
-            "/product/salePrice/text()", "salePrice",
-            "/product/onSale/text()", "onSale",
-            "/product/digital/text()", "digital",
-            "/product/frequentlyPurchasedWith/*/text()", "frequentlyPurchasedWith",# Note the match all here to get the subfields
-            "/product/accessories/*/text()", "accessories",# Note the match all here to get the subfields
-            "/product/relatedProducts/*/text()", "relatedProducts",# Note the match all here to get the subfields
+            "/product/productId/text()", "productId", # bigint
+            "/product/sku/text()", "sku", # int
+            "/product/name/text()", "name", # string
+            "/product/type/text()", "type", #string
+            "/product/startDate/text()", "startDate", #date
+            "/product/active/text()", "active", #bool
+            "/product/regularPrice/text()", "regularPrice", #float
+            "/product/salePrice/text()", "salePrice", #float
+            "/product/onSale/text()", "onSale", #bool
+            "/product/digital/text()", "digital", #bool
+            "/product/frequentlyPurchasedWith/*/text()", "frequentlyPurchasedWith",# Note the match all here to get the subfields list?
+            "/product/accessories/*/text()", "accessories",# Note the match all here to get the subfields list?
+            "/product/relatedProducts/*/text()", "relatedProducts",# Note the match all here to get the subfields list?
             "/product/crossSell/text()", "crossSell",
-            "/product/salesRankShortTerm/text()", "salesRankShortTerm",
-            "/product/salesRankMediumTerm/text()", "salesRankMediumTerm",
-            "/product/salesRankLongTerm/text()", "salesRankLongTerm",
-            "/product/bestSellingRank/text()", "bestSellingRank",
-            "/product/url/text()", "url",
-            "/product/categoryPath/*/name/text()", "categoryPath", # Note the match all here to get the subfields
-            "/product/categoryPath/*/id/text()", "categoryPathIds", # Note the match all here to get the subfields
-            "/product/categoryPath/category[last()]/id/text()", "categoryLeaf",
-            "count(/product/categoryPath/*/name)", "categoryPathCount",
-            "/product/customerReviewCount/text()", "customerReviewCount",
-            "/product/customerReviewAverage/text()", "customerReviewAverage",
-            "/product/inStoreAvailability/text()", "inStoreAvailability",
-            "/product/onlineAvailability/text()", "onlineAvailability",
-            "/product/releaseDate/text()", "releaseDate",
-            "/product/shippingCost/text()", "shippingCost",
-            "/product/shortDescription/text()", "shortDescription",
-            "/product/shortDescriptionHtml/text()", "shortDescriptionHtml",
-            "/product/class/text()", "class",
-            "/product/classId/text()", "classId",
-            "/product/subclass/text()", "subclass",
-            "/product/subclassId/text()", "subclassId",
-            "/product/department/text()", "department",
-            "/product/departmentId/text()", "departmentId",
-            "/product/bestBuyItemId/text()", "bestBuyItemId",
-            "/product/description/text()", "description",
-            "/product/manufacturer/text()", "manufacturer",
-            "/product/modelNumber/text()", "modelNumber",
-            "/product/image/text()", "image",
-            "/product/condition/text()", "condition",
-            "/product/inStorePickup/text()", "inStorePickup",
-            "/product/homeDelivery/text()", "homeDelivery",
-            "/product/quantityLimit/text()", "quantityLimit",
-            "/product/color/text()", "color",
-            "/product/depth/text()", "depth",
-            "/product/height/text()", "height",
-            "/product/weight/text()", "weight",
-            "/product/shippingWeight/text()", "shippingWeight",
-            "/product/width/text()", "width",
-            "/product/longDescription/text()", "longDescription",
-            "/product/longDescriptionHtml/text()", "longDescriptionHtml",
-            "/product/features/*/text()", "features" # Note the match all here to get the subfields
+            "/product/salesRankShortTerm/text()", "salesRankShortTerm",  #int
+            "/product/salesRankMediumTerm/text()", "salesRankMediumTerm", #int
+            "/product/salesRankLongTerm/text()", "salesRankLongTerm", #int
+            "/product/bestSellingRank/text()", "bestSellingRank", #int
+            "/product/url/text()", "url", #string
+            "/product/categoryPath/*/name/text()", "categoryPath", # Note the match all here to get the subfields list?
+            "/product/categoryPath/*/id/text()", "categoryPathIds", # Note the match all here to get the subfields list?
+            "/product/categoryPath/category[last()]/id/text()", "categoryLeaf", #string
+            "count(/product/categoryPath/*/name)", "categoryPathCount", #int
+            "/product/customerReviewCount/text()", "customerReviewCount", #int
+            "/product/customerReviewAverage/text()", "customerReviewAverage", #float
+            "/product/inStoreAvailability/text()", "inStoreAvailability", #bool
+            "/product/onlineAvailability/text()", "onlineAvailability", #bool
+            "/product/releaseDate/text()", "releaseDate", #date
+            "/product/shippingCost/text()", "shippingCost", #float
+            "/product/shortDescription/text()", "shortDescription", #string
+            "/product/shortDescriptionHtml/text()", "shortDescriptionHtml", #string
+            "/product/class/text()", "class", #string
+            "/product/classId/text()", "classId", #int
+            "/product/subclass/text()", "subclass", #string
+            "/product/subclassId/text()", "subclassId", #int
+            "/product/department/text()", "department", #string
+            "/product/departmentId/text()", "departmentId", #int
+            "/product/bestBuyItemId/text()", "bestBuyItemId", #int
+            "/product/description/text()", "description", #string
+            "/product/manufacturer/text()", "manufacturer", #string
+            "/product/modelNumber/text()", "modelNumber", #string
+            "/product/image/text()", "image", #string
+            "/product/condition/text()", "condition", #string
+            "/product/inStorePickup/text()", "inStorePickup", #bool
+            "/product/homeDelivery/text()", "homeDelivery", #bool
+            "/product/quantityLimit/text()", "quantityLimit", #int
+            "/product/color/text()", "color", #string
+            "/product/depth/text()", "depth", #float
+            "/product/height/text()", "height", #float
+            "/product/weight/text()", "weight", #float
+            "/product/shippingWeight/text()", "shippingWeight", #float
+            "/product/width/text()", "width", #float
+            "/product/longDescription/text()", "longDescription", #string
+            "/product/longDescriptionHtml/text()", "longDescriptionHtml", #string
+            "/product/features/*/text()", "features" # Note the match all here to get the subfields list?
 
         ]
       }
