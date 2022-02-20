@@ -4,7 +4,7 @@
 from flask import (
     Blueprint, redirect, render_template, request, url_for
 )
-
+import json
 from week1.opensearch import get_opensearch
 
 bp = Blueprint('search', __name__, url_prefix='/search')
@@ -74,7 +74,10 @@ def query():
         query_obj = create_query("*", [], sort, sortDir)
 
     print("query obj: {}".format(query_obj))
-    response = None   # TODO: Replace me with an appropriate call to OpenSearch
+    response = opensearch.search(
+        body=query_obj,
+        index="bbuy_products"
+    )   # TODO: Replace me with an appropriate call to OpenSearch
     # Postprocess results here if you so desire
 
     #print(response)
@@ -88,13 +91,35 @@ def query():
 
 def create_query(user_query, filters, sort="_score", sortDir="desc"):
     print("Query: {} Filters: {} Sort: {}".format(user_query, filters, sort))
-    query_obj = {
+    if user_query == '*':
+        query_obj = {
         'size': 10,
         "query": {
-            "match_all": {} # Replace me with a query that both searches and filters
-        },
-        "aggs": {
-            #TODO: FILL ME IN
-        }
+                "match_all": {} # Replace me with a query that both searches and filters
+            },
+        # "aggs": {
+        #     #TODO: FILL ME IN
+        # }
     }
+    else:
+        query_obj = {
+            "size": 10,
+            "query": {
+                "function_score": {
+                    "query": {
+                    "query_string": {
+                                "query": user_query,
+                                "fields": ["name^1000", "shortDescription^50", "longDescription^10", "department"]
+                        }
+                    },
+                    "boost_mode": "replace",
+                    "score_mode": "avg",
+                    "functions": [
+                    ]
+                }
+
+            },
+            "_source": ["productId", "name", "shortDescription", "longDescription", "department", "salesRankShortTerm",  "salesRankMediumTerm", "salesRankLongTerm", "regularPrice"]
+            }
+    print(json.dumps(query_obj))
     return query_obj
