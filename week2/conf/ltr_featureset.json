@@ -26,19 +26,26 @@
         }
       },
       {
-        "name": "name_hyphens_min_df",
+        "name": "long_description_match",
         "params": [
           "keywords"
         ],
         "template_language": "mustache",
         "template": {
-          "match_explorer": {
-            "type": "min_raw_df",
-            "query": {
-              "match": {
-                "name.hyphens": "{{keywords}}"
-              }
-            }
+          "match_phrase": {
+            "longDescription": "{{keywords}}"
+          }
+        }
+      },
+      {
+        "name": "features_match",
+        "params": [
+          "keywords"
+        ],
+        "template_language": "mustache",
+        "template": {
+          "match_phrase": {
+            "features": "{{keywords}}"
           }
         }
       },
@@ -77,6 +84,106 @@
             "query": {
               "match_all": {}
             }
+          }
+        }
+      },
+      {
+        "name": "sales_rank_short_term",
+        "template_language": "mustache",
+        "template": {
+          "function_score": {
+            "functions": [
+              {
+                "gauss": {
+                  "salesRankShortTerm": {
+                    "origin": "1",
+                    "scale": "1000",
+                    "offset": "50"
+                  }
+                }
+              }
+            ],
+            "query": {
+              "match_all": {}
+            }
+          }
+        }
+      },
+      {
+        "name": "sales_rank_long_term",
+        "template_language": "mustache",
+        "template": {
+          "function_score": {
+            "functions": [
+              {
+                "gauss": {
+                  "salesRankLongTerm": {
+                    "origin": "1",
+                    "scale": "100",
+                    "offset": "50"
+                  }
+                }
+              }
+            ],
+            "query": {
+              "match_all": {}
+            }
+          }
+        }
+      },
+      {
+        "name": "sales_rank_med_term",
+        "template_language": "mustache",
+        "template": {
+          "function_score": {
+            "functions": [
+              {
+                "gauss": {
+                  "salesRankMediumTerm": {
+                    "origin": "1",
+                    "scale": "1000",
+                    "offset": "500"
+                  }
+                }
+              }
+            ],
+            "query": {
+              "match_all": {}
+            }
+          }
+        }
+      },
+      {
+        "name": "startDate",
+        "template_language": "mustache",
+        "template": {
+          "function_score": {
+            "functions": [
+              {
+                "exp": {
+                  "startDate": {
+                    "origin": "2012-07-29",
+                    "offset": "365d",
+                    "scale": "90d"
+                  }
+                }
+              }
+            ],
+            "query": {
+              "match_all": {}
+            }
+          }
+        }
+      },
+      {
+        "name": "click_prior_query",
+        "template_language": "mustache",
+        "template": {
+          "query_string": {
+            "query": "{{click_prior_query}}",
+            "fields": [
+              "_id"
+            ]
           }
         }
       }
