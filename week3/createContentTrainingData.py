@@ -1,12 +1,15 @@
 import argparse
 import os
 import random
+import string
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from nltk.stem.snowball import SnowballStemmer
+stemmer = SnowballStemmer("english")
 
 def transform_name(product_name):
-    # IMPLEMENT
-    return product_name
+    translator = str.maketrans(' ',' ',string.punctuation) #map punctuation to space
+    return stemmer.stem(product_name.lower().translate(translator))
 
 # Directory for product data
 directory = r'/workspace/search_with_machine_learning_course/data/pruned_products/'
@@ -20,7 +23,7 @@ general.add_argument("--output", default="/workspace/datasets/fasttext/output.fa
 general.add_argument("--sample_rate", default=1.0, type=float, help="The rate at which to sample input (default is 1.0)")
 
 # IMPLEMENT: Setting min_products removes infrequent categories and makes the classifier's task easier.
-general.add_argument("--min_products", default=0, type=int, help="The minimum number of products per category (default is 0).")
+general.add_argument("--min_products", default=5, type=int, help="The minimum number of products per category (default is 0).")
 
 args = parser.parse_args()
 output_file = args.output

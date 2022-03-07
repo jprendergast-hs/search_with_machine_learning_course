@@ -1,0 +1,207 @@
+Week 3 self-assessment questions
+
+What precision (P@1) were you able to achieve?
+ - 0.626
+
+What fastText parameters did you use?
+ - Epochs: 50
+ - Learning Rate: 2
+ - Ngrams: 2
+
+How did you transform the product names?
+ - Lowercase
+ - Snowball Stemming
+ - Replace punctuation with space
+
+How did you prune infrequent category labels, and how did that affect your precision?
+ - Min Products was set to 5
+ - I did not get to leaf-depth pruning, but I imagine that would help quite a bit.
+
+How did you prune the category tree, and how did that affect your precision?
+ - As I said before, I didn't get to category tree pruning, but it would be very useful.
+
+
+
+For deriving synonyms from content:
+
+What 20 tokens did you use for evaluation?
+Products:
+ - 'cable','camera','monitor','drive','ipod'
+Brands: 
+ - 'apple','canon', 'lg','samsung','toshiba'
+Models:
+ - 'macbook','playstation','nano','razr','touchbook'
+Attributes:
+ - 'wireless','plated','bluetooth','rgb','gold'
+
+What fastText parameters did you use?
+ - minn: 3 
+ - maxn: 5
+ - dim: 25
+ - epoch: 25
+ - minCount: 7  
+ - lr 0.25
+ - wordNgrams: 3
+
+How did you transform the product names?
+ - Lowercase
+ - Stemming
+ - Replace punctuation with space
+ - Replace tabs and newlines with spaces
+
+What threshold score did you use?
+ - 0.8
+
+What synonyms did you obtain for those tokens?
+
+cable
+2m 0.926568
+minitorca 0.914874
+toslink 0.896647
+hdmitodvi 0.876269
+minitotoslink 0.871983
+coffeeblack 0.871892
+35mm 0.868049
+1m 0.867288
+audioquest 0.864227
+interconnect 0.859308
+
+camera
+nikon 0.876889
+slr 0.876843
+dslr 0.869555
+len 0.85907
+zoom 0.854324
+l810 0.853838
+digital 0.851313
+18200mm 0.850521
+a230 0.8493
+1855mm 0.848798
+
+monitor
+lcd 0.875251
+i5707034pbk 0.862513
+p6774y 0.848697
+cq2014 0.843851
+i5809186nbc 0.83957
+sx280325e 0.832617
+aoc 0.83037
+cq5814 0.827168
+cm173003 0.825549
+el185001e 0.825188
+
+drive
+500gb 0.940819
+320gb 0.929183
+hard 0.916167
+750gb 0.907483
+250gb 0.895221
+640gb 0.889832
+biscotti 0.873604
+gammatech 0.855686
+simpletech 0.855437
+display 0.846351
+
+ipod
+touch 0.879133
+4thgeneration 0.868979
+slimshell 0.867199
+emerge 0.847158
+apple 0.846697
+griffin 0.84432
+nano 0.819761
+powerblock 0.815307
+armband 0.815105
+aerosport 0.812749
+
+apple
+iphone 0.881079
+ipad 0.878283
+ipod 0.846697
+4thgeneration 0.826932
+candyshell 0.818938
+4 0.815702
+ipadâ 0.805737
+
+canon
+eos 0.88166
+18mp 0.870033
+151megapixel 0.863197
+5d 0.860333
+60d 0.857089
+rebel 0.853105
+t2i 0.851237
+powershot 0.850765
+180mp 0.836999
+sx260 0.83397
+
+lg
+samsung 0.879788
+
+samsung
+lg 0.879788
+
+toshiba
+whdmi 0.815033
+
+
+macbook
+laptops 0.889058
+codex 0.813948
+154 0.800847
+
+playstation
+360 0.950908
+xbox 0.936113
+3 0.922201
+psp 0.91446
+ps2 0.911684
+guide 0.889525
+ps3 0.881823
+bigs 0.881453
+game 0.878138
+gamecube 0.856964
+
+nano
+6thgeneration 0.89985
+aerosport 0.847024
+slimshell 0.843007
+watchband 0.840878
+latest 0.822441
+3rdgeneration 0.821388
+survivor 0.820264
+ipod 0.819761
+griffin 0.818853
+armband 0.814774
+
+razr
+motorola 0.886038
+phones 0.881399
+cliq 0.837457
+photon 0.832528
+captivate 0.826305
+cell 0.819921
+phon 0.813464
+cellsuit 0.811917
+swivelclip 0.810826
+scuba 0.802473
+
+touchbook
+ibook 0.834487
+
+wireless
+NONE
+
+plated
+NONE
+
+bluetooth
+bluetoothenabled 0.860682
+parrot 0.81971
+headset 0.817265
+jabra 0.812052
+
+gold
+ord 0.833922
+bisque 0.828364
+special 0.811864
